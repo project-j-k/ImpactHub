@@ -8,11 +8,14 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 
 export function ProjectForm() {
   const [projectData, setProjectData] = useState({
-    name: "",
-    description: "",
-    priority: "",
-    budget: "",
-    deadline: "",
+    title: "",
+    summary: "",
+    bizImpact: "",
+    devLoad: "",
+    releaseWindow: "",
+    targetDate: "",
+    latestStartDate: "",
+    kpi: "",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -26,66 +29,124 @@ export function ProjectForm() {
         <CardTitle className="text-dashboard-primary">New Project</CardTitle>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <Label htmlFor="name" className="text-dashboard-primary">Project Name</Label>
-            <Input
-              id="name"
-              value={projectData.name}
-              onChange={(e) => setProjectData(prev => ({ ...prev, name: e.target.value }))}
-              placeholder="Enter project name"
-              className="border-dashboard-border focus:ring-dashboard-accent"
-            />
-          </div>
-          
-          <div>
-            <Label htmlFor="description" className="text-dashboard-primary">Description</Label>
-            <Textarea
-              id="description"
-              value={projectData.description}
-              onChange={(e) => setProjectData(prev => ({ ...prev, description: e.target.value }))}
-              placeholder="Project description"
-              className="border-dashboard-border focus:ring-dashboard-accent h-20"
-            />
-          </div>
-          
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <Label htmlFor="priority" className="text-dashboard-primary">Priority</Label>
-              <Select value={projectData.priority} onValueChange={(value) => setProjectData(prev => ({ ...prev, priority: value }))}>
-                <SelectTrigger className="border-dashboard-border">
-                  <SelectValue placeholder="Select priority" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="high">High</SelectItem>
-                  <SelectItem value="medium">Medium</SelectItem>
-                  <SelectItem value="low">Low</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Basic Information Section */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-dashboard-primary border-b border-dashboard-border pb-2">
+              Basic Information
+            </h3>
+            <p className="text-sm text-dashboard-muted">
+              This is the fundamental information to identify the project item.
+            </p>
             
             <div>
-              <Label htmlFor="budget" className="text-dashboard-primary">Budget</Label>
+              <Label htmlFor="title" className="text-dashboard-primary">Title</Label>
               <Input
-                id="budget"
-                type="number"
-                value={projectData.budget}
-                onChange={(e) => setProjectData(prev => ({ ...prev, budget: e.target.value }))}
-                placeholder="0"
+                id="title"
+                value={projectData.title}
+                onChange={(e) => setProjectData(prev => ({ ...prev, title: e.target.value }))}
+                placeholder="The name of the project item"
                 className="border-dashboard-border focus:ring-dashboard-accent"
               />
             </div>
+            
+            <div>
+              <Label htmlFor="summary" className="text-dashboard-primary">Summary</Label>
+              <Textarea
+                id="summary"
+                value={projectData.summary}
+                onChange={(e) => setProjectData(prev => ({ ...prev, summary: e.target.value }))}
+                placeholder="A description of the project item's purpose and content"
+                className="border-dashboard-border focus:ring-dashboard-accent h-20"
+              />
+            </div>
           </div>
-          
-          <div>
-            <Label htmlFor="deadline" className="text-dashboard-primary">Deadline</Label>
-            <Input
-              id="deadline"
-              type="date"
-              value={projectData.deadline}
-              onChange={(e) => setProjectData(prev => ({ ...prev, deadline: e.target.value }))}
-              className="border-dashboard-border focus:ring-dashboard-accent"
-            />
+
+          {/* Evaluation & Planning Parameters Section */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-dashboard-primary border-b border-dashboard-border pb-2">
+              Evaluation & Planning Parameters
+            </h3>
+            <p className="text-sm text-dashboard-muted">
+              This information is used for calculating priority and for schedule management.
+            </p>
+            
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="bizImpact" className="text-dashboard-primary">Biz Impact (Business Impact)</Label>
+                <Input
+                  id="bizImpact"
+                  type="number"
+                  value={projectData.bizImpact}
+                  onChange={(e) => setProjectData(prev => ({ ...prev, bizImpact: e.target.value }))}
+                  placeholder="Enter numerical value"
+                  className="border-dashboard-border focus:ring-dashboard-accent"
+                />
+              </div>
+              
+              <div>
+                <Label htmlFor="devLoad" className="text-dashboard-primary">Dev Load (Development Effort)</Label>
+                <Select value={projectData.devLoad} onValueChange={(value) => setProjectData(prev => ({ ...prev, devLoad: value }))}>
+                  <SelectTrigger className="border-dashboard-border">
+                    <SelectValue placeholder="Select effort scale" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="XS">XS</SelectItem>
+                    <SelectItem value="S">S</SelectItem>
+                    <SelectItem value="M">M</SelectItem>
+                    <SelectItem value="L">L</SelectItem>
+                    <SelectItem value="XL">XL</SelectItem>
+                    <SelectItem value="XXL">XXL</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="releaseWindow" className="text-dashboard-primary">Release Window</Label>
+                <Input
+                  id="releaseWindow"
+                  value={projectData.releaseWindow}
+                  onChange={(e) => setProjectData(prev => ({ ...prev, releaseWindow: e.target.value }))}
+                  placeholder="e.g., Q4 2025"
+                  className="border-dashboard-border focus:ring-dashboard-accent"
+                />
+              </div>
+              
+              <div>
+                <Label htmlFor="targetDate" className="text-dashboard-primary">Target Date</Label>
+                <Input
+                  id="targetDate"
+                  type="date"
+                  value={projectData.targetDate}
+                  onChange={(e) => setProjectData(prev => ({ ...prev, targetDate: e.target.value }))}
+                  className="border-dashboard-border focus:ring-dashboard-accent"
+                />
+              </div>
+            </div>
+            
+            <div>
+              <Label htmlFor="latestStartDate" className="text-dashboard-primary">Latest Start Date</Label>
+              <Input
+                id="latestStartDate"
+                type="date"
+                value={projectData.latestStartDate}
+                onChange={(e) => setProjectData(prev => ({ ...prev, latestStartDate: e.target.value }))}
+                className="border-dashboard-border focus:ring-dashboard-accent"
+              />
+            </div>
+            
+            <div>
+              <Label htmlFor="kpi" className="text-dashboard-primary">KPI</Label>
+              <Textarea
+                id="kpi"
+                value={projectData.kpi}
+                onChange={(e) => setProjectData(prev => ({ ...prev, kpi: e.target.value }))}
+                placeholder="Enter the metrics that will be used to measure the success of the project item"
+                className="border-dashboard-border focus:ring-dashboard-accent h-16"
+              />
+            </div>
           </div>
           
           <Button 
